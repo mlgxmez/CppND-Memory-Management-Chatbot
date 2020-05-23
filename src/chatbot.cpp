@@ -44,7 +44,43 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+ChatBot::ChatBot(const ChatBot &source)
+{
+  _image = new wxBitmap;
+  *_image = *source._image; // Access attribute from pointer
+  std::cout << "ChatBot copy constructor" << std::endl;
+}
 
+ChatBot& ChatBot::operator=(const ChatBot& source)
+{
+  std::cout << "ChatBot copy assignment operator" << std::endl;
+  if (this == &source)
+    return *this;
+  delete _image;
+  _image = new wxBitmap;
+  *_image = *source._image;
+  return *this;
+}
+
+ChatBot::ChatBot(ChatBot &&source)
+{
+  std::cout << "ChatBot move constructor" << std::endl;
+  _image = source._image;
+  source._image = nullptr;
+}
+
+ChatBot& ChatBot::operator=(ChatBot &&source)
+{
+  std::cout << "ChatBot move assignment operator" << std::endl;
+  if (this == &source)
+    return *this;
+  
+  delete _image;
+  _image = source._image;
+  source._image = nullptr;
+  
+  return *this;
+}
 ////
 //// EOF STUDENT CODE
 
